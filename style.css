@@ -6,3 +6,17 @@
     margin: 0;
     font-family: sans-serif;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+}
+
+aside#timer {
+    display: none;
+}
+
+aside#feedback {
+    display: none;
+}
