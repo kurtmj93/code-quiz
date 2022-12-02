@@ -71,7 +71,7 @@ function startTimer() {
 let qCounter = 0;
 console.log(questions.length);
 
-function showQuestion() {
+function showQuestion(qCounter) {
     questionEl.text(questions[qCounter].qText);
     mc1El.text(questions[qCounter].answers[0].text);
     mc1El.val(questions[qCounter].answers[0].isAnswer);
@@ -84,21 +84,25 @@ function showQuestion() {
 }
 
 
+function checkTrue() {
+    let buttonEl = $('button');
+    buttonEl.click(function() {
+        feedbackEl.show();
+    // Unintentionally, this boolean value is being evaluated as a string. It works, but it's not right
+        if (this.value == 'true') {
+                messageEl.text('Correct!');
+                qCounter++;
+        } else {
+                messageEl.text("That's not it, Fam.");
+        }
+    });
+};
+
 function startQuiz() {
     quizEl.show();
     if (qCounter < questions.length) {
-        showQuestion();
-        let buttonEl = $('button');
-        buttonEl.click(function() {
-            console.log(this.value);
-            // Unintentionally, this boolean value is being evaluated as a string. It works, but it's not right
-            if (this.value == 'true') {
-                alert('ya');
-                qCounter++;
-            } else {
-                alert('nah');
-            }
-        });
+        showQuestion(qCounter);
+        checkTrue();
     } else {
         finishQuiz();
     }
