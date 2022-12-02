@@ -1,5 +1,10 @@
 // grab HTML elements using JQuery
 let quizEl = $('#quiz');
+let questionEl = $('#question');
+let mc1El = $('#mc1');
+let mc2El = $('#mc2');
+let mc3El = $('#mc3');
+let mc4El = $('#mc4');
 let timerEl = $('#timer');
 let timeEl = $('#time');
 let feedbackEl = $('#feedback');
@@ -10,17 +15,29 @@ let startEl = $('#start');
 
 let questions = [
     {
-        text: "Commonly used data types do NOT include: ",
-        options: ["Strings", "Booleans", "Alerts", "Numbers"],
-        answer: "Alerts"
+        qText: "Commonly used data types do NOT include: ",
+        answers: [
+            {text: "Strings", isAnswer: false },
+            {text: "Booleans", isAnswer: false },
+            {text: "Alerts", isAnswer: true }, 
+            {text: "Numbers", isAnswer: false }
+        ]
     },{
-        text: "Arrays in Javascript can be used to store _____________.",
-        options: ["Numbers and Strings", "Other Arrays", "Booleans","All of the Above"],
-        answer: "All of the Above"
+        qText: "Arrays in Javascript can be used to store _____________.",
+        answers: [
+            {text: "Numbers and Strings", isAnswer: false },
+            {text: "Other Arrays", isAnswer: false },
+            {text: "Booleans", isAnswer: false },
+            {text: "All of the Above", isAnswer: true }
+        ]
     },{
-        text: "Click on the answer.",
-        options: ["The answer.", "Not the answer.", "Definitely not the answer.", "Don't click here."],
-        answer: "The answer."
+        qText: "Click on the answer.",
+        answers: [
+            {text: "The answer.", isAnswer: true },
+            {text: "Not the answer.", isAnswer: false },
+            {text: "Definitely not the answer.", isAnswer: false }, 
+            {text: "Don't click here.", isAnswer: false }
+        ]
     }
 ];
 
@@ -30,6 +47,8 @@ let totalQuestions = questions.length;
 
 function finishQuiz() {
     startEl.show();
+    timerEl.hide();
+    quizEl.hide();
 };
 
 function startTimer() {
@@ -49,24 +68,41 @@ function startTimer() {
     }, 1000);
 }
 
+let qCounter = 0;
+console.log(questions.length);
+
+function showQuestion() {
+    questionEl.text(questions[qCounter].qText);
+    mc1El.text(questions[qCounter].answers[0].text);
+    mc1El.val(questions[qCounter].answers[0].isAnswer);
+    mc2El.text(questions[qCounter].answers[1].text);
+    mc2El.val(questions[qCounter].answers[1].isAnswer);
+    mc3El.text(questions[qCounter].answers[2].text);
+    mc3El.val(questions[qCounter].answers[2].isAnswer);
+    mc4El.text(questions[qCounter].answers[3].text);
+    mc4El.val(questions[qCounter].answers[3].isAnswer);
+}
+
+
 function startQuiz() {
-    let i = 0;
-        let buttons = questions[i].options.map(option => {
-            let btn = document.createElement("button");
-            btn.id = option;
-            btn.textContent = option;
-            return btn;
-        });
-        quizEl.append(buttons);
-        let buttonEl = $("button");
+    quizEl.show();
+    if (qCounter < questions.length) {
+        showQuestion();
+        let buttonEl = $('button');
         buttonEl.click(function() {
-            if (this.id == questions[i].answer) {
-                alert('you got it bub');
+            console.log(this.value);
+            // Unintentionally, this boolean value is being evaluated as a string. It works, but it's not right
+            if (this.value == 'true') {
+                alert('ya');
+                qCounter++;
             } else {
-                alert('wrong');
+                alert('nah');
             }
         });
+    } else {
+        finishQuiz();
     }
+}
 
 startEl.click(function() {
     startTimer();
