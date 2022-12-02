@@ -4,44 +4,36 @@ let timerEl = $('#timer');
 let timeEl = $('#time');
 let feedbackEl = $('#feedback');
 let messageEl = $('#message');
-let startEl = $('#start')
+let startEl = $('#start');
 
 // array of question objects
 
 let questions = [
     {
-        "text": "Commonly used data types do NOT include: ",
-        "mc1": "Strings",
-        "mc2": "Booleans",
-        "mc3": "Alerts",
-        "mc4": "Numbers",
-        "answer": "Alerts"
+        text: "Commonly used data types do NOT include: ",
+        options: ["Strings", "Booleans", "Alerts", "Numbers"],
+        answer: "Alerts"
     },{
-        "text": "Arrays in Javascript can be used to store _____________.",
-        "mc1": "Numbers and Strings",
-        "mc2": "Other Arrays",
-        "mc3": "Booleans",
-        "mc4": "All of the Above",
-        "answer": "All of the Above"
+        text: "Arrays in Javascript can be used to store _____________.",
+        options: ["Numbers and Strings", "Other Arrays", "Booleans","All of the Above"],
+        answer: "All of the Above"
     },{
-        "text": "Click on the answer.",
-        "mc1": "The answer.",
-        "mc2": "Not the answer.",
-        "mc3": "Definitely not the answer.",
-        "mc4": "Don't click here.",
-        "answer": "The answer."
+        text: "Click on the answer.",
+        options: ["The answer.", "Not the answer.", "Definitely not the answer.", "Don't click here."],
+        answer: "The answer."
     }
 ];
 
 let score = 0;
 let isFinished = false;
+let totalQuestions = questions.length;
 
 function finishQuiz() {
-    alert("it's over");
+    startEl.show();
 };
 
 function startTimer() {
-    let time = 5;
+    let time = 15;
     timeEl.text(time);
     // changes timer css to display with jQuery
     timerEl.show();
@@ -57,6 +49,27 @@ function startTimer() {
     }, 1000);
 }
 
+function startQuiz() {
+    let i = 0;
+        let buttons = questions[i].options.map(option => {
+            let btn = document.createElement("button");
+            btn.id = option;
+            btn.textContent = option;
+            return btn;
+        });
+        quizEl.append(buttons);
+        let buttonEl = $("button");
+        buttonEl.click(function() {
+            if (this.id == questions[i].answer) {
+                alert('you got it bub');
+            } else {
+                alert('wrong');
+            }
+        });
+    }
+
 startEl.click(function() {
     startTimer();
+    startEl.hide();
+    startQuiz();
 });
