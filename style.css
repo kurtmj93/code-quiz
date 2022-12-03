@@ -13,14 +13,6 @@ body {
     padding: 40px;
 }
 
-aside#timer {
-    display: none;
-}
-
-aside#feedback {
-    display: none;
-}
-
-#quiz {
+#timer, #feedback, #quiz, #score {
     display: none;
 }

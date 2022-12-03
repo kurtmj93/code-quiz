@@ -10,6 +10,8 @@ let timeEl = $('#time');
 let feedbackEl = $('#feedback');
 let messageEl = $('#message');
 let startEl = $('#start');
+let scoreEl = $('#score');
+let correctEl = $('#correct');
 
 // variables to use in functions
 let qCounter = 0;
@@ -48,8 +50,11 @@ let questions = [
 function startQuiz() {
     quizEl.show();
     feedbackEl.hide();
+    scoreEl.show();
     isFinished = false;
     qCounter = 0;
+    score = 0;
+    correctEl.text(score);
     iterateQuiz(qCounter);
 }
 
@@ -92,6 +97,7 @@ function updateQuestion(qCounter) {
 // iterate on button click, for use in checkTrue
 function countClick() {
     feedbackEl.show();
+    correctEl.text(score);
     qCounter++;
     iterateQuiz(qCounter);
 }
@@ -103,6 +109,7 @@ function checkTrue() {
     // Unintentionally, this boolean value is being evaluated as a string. It works, but is it right
         if (this.value == 'true' ) {
                 messageEl.text('Correct!');
+                score++;
                 countClick();
         } else if (this.value == 'false') {
                 messageEl.text("That's not it.");
