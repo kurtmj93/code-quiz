@@ -10,6 +10,9 @@ let timeEl = $('#time');
 let feedbackEl = $('#feedback');
 let messageEl = $('#message');
 let startEl = $('#start');
+let qCounter = 0;
+let score = 0;
+let isFinished = false;
 
 // array of question objects
 
@@ -41,18 +44,21 @@ let questions = [
     }
 ];
 
-let score = 0;
-let isFinished = false;
-let totalQuestions = questions.length;
-
 function finishQuiz() {
     startEl.show();
     timerEl.hide();
     quizEl.hide();
 };
 
+function startQuiz() {
+    quizEl.show();
+    feedbackEl.hide();
+    qCounter = 0;
+    iterateQuiz(qCounter);
+}
+
 function startTimer() {
-    let time = 15;
+    let time = 20;
     timeEl.text(time);
     // changes timer css to display with jQuery
     timerEl.show();
@@ -68,10 +74,7 @@ function startTimer() {
     }, 1000);
 }
 
-let qCounter = 0;
-console.log(questions.length);
-
-function showQuestion(qCounter) {
+function updateQuestion(qCounter) {
     questionEl.text(questions[qCounter].qText);
     mc1El.text(questions[qCounter].answers[0].text);
     mc1El.val(questions[qCounter].answers[0].isAnswer);
@@ -83,28 +86,35 @@ function showQuestion(qCounter) {
     mc4El.val(questions[qCounter].answers[3].isAnswer);
 }
 
-
 function checkTrue() {
     let buttonEl = $('button');
     buttonEl.click(function() {
-        feedbackEl.show();
     // Unintentionally, this boolean value is being evaluated as a string. It works, but it's not right
-        if (this.value == 'true') {
+        if (this.value == 'true' ) {
                 messageEl.text('Correct!');
-                qCounter++;
+                countClick();
+        } else if (this.value == 'false') {
+                messageEl.text("That's not it.");
+                countClick();
         } else {
-                messageEl.text("That's not it, Fam.");
+            return;
         }
     });
 };
 
-function startQuiz() {
-    quizEl.show();
-    if (qCounter < questions.length) {
-        showQuestion(qCounter);
-        checkTrue();
-    } else {
+function countClick() {
+    feedbackEl.show();
+    qCounter++;
+    iterateQuiz(qCounter);
+}
+
+checkTrue();
+
+function iterateQuiz(qCounter) {
+    if (qCounter === questions.length) {
         finishQuiz();
+    } else {
+        updateQuestion(qCounter);
     }
 }
 
