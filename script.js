@@ -14,6 +14,7 @@ let startEl = $('#start');
 // variables to use in functions
 let qCounter = 0;
 let score = 0;
+let isFinished = false;
 
 // array of question objects
 let questions = [
@@ -47,6 +48,7 @@ let questions = [
 function startQuiz() {
     quizEl.show();
     feedbackEl.hide();
+    isFinished = false;
     qCounter = 0;
     iterateQuiz(qCounter);
 }
@@ -66,8 +68,8 @@ function startTimer() {
     let timer = setInterval(function() {
         time--;
         timeEl.text(time);
-        // checks if time has run out
-        if (time === 0) {
+        // OR operator checks if time has run out or if questions are finished
+        if (isFinished || time === 0) {
             clearInterval(timer);
             finishQuiz();
         }
@@ -114,6 +116,7 @@ function checkTrue() {
 // finish quiz or update counter
 function iterateQuiz(qCounter) {
     if (qCounter === questions.length) {
+        isFinished = true; // need to update this value to turn off timer
         finishQuiz();
     } else {
         updateQuestion(qCounter);
