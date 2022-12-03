@@ -14,9 +14,10 @@ let scoreEl = $('#score');
 let correctEl = $('#correct');
 
 // variables to use in functions
-let qCounter = 0;
-let score = 0;
-let isFinished = false;
+let qCounter = 0; // question iterator
+let score = 0; // score counter
+let isFinished = false; // 
+let time = 0; // quiz time value is set later by startTimer
 
 // array of question objects
 let questions = [
@@ -66,7 +67,7 @@ function finishQuiz() {
 
 function startTimer() {
     // number of seconds on the timer
-    let time = 20;
+    time = 20;
     timeEl.text(time);
     timerEl.show();
     // sets timer going, updates time every second
@@ -113,6 +114,8 @@ function checkTrue() {
                 countClick();
         } else if (this.value == 'false') {
                 messageEl.text("That's not it.");
+                time -= 5; // acceptance criteria - remove time when wrong
+                timeEl.text(time);
                 countClick();
         } else {
             return;
