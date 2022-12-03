@@ -10,12 +10,12 @@ let timeEl = $('#time');
 let feedbackEl = $('#feedback');
 let messageEl = $('#message');
 let startEl = $('#start');
+
+// variables to use in functions
 let qCounter = 0;
 let score = 0;
-let isFinished = false;
 
 // array of question objects
-
 let questions = [
     {
         qText: "Commonly used data types do NOT include: ",
@@ -44,12 +44,6 @@ let questions = [
     }
 ];
 
-function finishQuiz() {
-    startEl.show();
-    timerEl.hide();
-    quizEl.hide();
-};
-
 function startQuiz() {
     quizEl.show();
     feedbackEl.hide();
@@ -57,23 +51,30 @@ function startQuiz() {
     iterateQuiz(qCounter);
 }
 
+function finishQuiz() {
+    startEl.show();
+    timerEl.hide();
+    quizEl.hide();
+};
+
 function startTimer() {
+    // number of seconds on the timer
     let time = 20;
     timeEl.text(time);
-    // changes timer css to display with jQuery
     timerEl.show();
-    // sets timer going
+    // sets timer going, updates time every second
     let timer = setInterval(function() {
         time--;
         timeEl.text(time);
-        // OR operator checks if questions are finished or time has run out
-        if (isFinished || time === 0) {
+        // checks if time has run out
+        if (time === 0) {
             clearInterval(timer);
             finishQuiz();
         }
-    }, 1000);
+    }, 1000); // 1000ms = 1 second
 }
 
+// update question and button texts and values - this could maybe be more efficient
 function updateQuestion(qCounter) {
     questionEl.text(questions[qCounter].qText);
     mc1El.text(questions[qCounter].answers[0].text);
@@ -86,10 +87,18 @@ function updateQuestion(qCounter) {
     mc4El.val(questions[qCounter].answers[3].isAnswer);
 }
 
+// iterate on button click, for use in checkTrue
+function countClick() {
+    feedbackEl.show();
+    qCounter++;
+    iterateQuiz(qCounter);
+}
+
+// check if button value is correct answer
 function checkTrue() {
     let buttonEl = $('button');
     buttonEl.click(function() {
-    // Unintentionally, this boolean value is being evaluated as a string. It works, but it's not right
+    // Unintentionally, this boolean value is being evaluated as a string. It works, but is it right
         if (this.value == 'true' ) {
                 messageEl.text('Correct!');
                 countClick();
@@ -102,14 +111,7 @@ function checkTrue() {
     });
 };
 
-function countClick() {
-    feedbackEl.show();
-    qCounter++;
-    iterateQuiz(qCounter);
-}
-
-checkTrue();
-
+// finish quiz or update counter
 function iterateQuiz(qCounter) {
     if (qCounter === questions.length) {
         finishQuiz();
@@ -118,8 +120,12 @@ function iterateQuiz(qCounter) {
     }
 }
 
+// start quiz button
 startEl.click(function() {
     startTimer();
     startEl.hide();
     startQuiz();
 });
+
+// run global button listener
+checkTrue();
