@@ -12,12 +12,18 @@ let messageEl = $('#message');
 let startEl = $('#start');
 let scoreEl = $('#score');
 let correctEl = $('#correct');
+let saveEl = $('#save-score');
+let highscoresEl = $('#highscores');
+let showscoresEl = $('#showscores');
 
 // variables to use in functions
 let qCounter = 0; // question iterator
 let score = 0; // score counter
 let isFinished = false; // 
 let time = 0; // quiz time value is set later by startTimer
+
+// stored data
+let storedscores = JSON.parse(localStorage.getItem("highscores"));
 
 // array of question objects
 let questions = [
@@ -49,20 +55,72 @@ let questions = [
 ];
 
 function startQuiz() {
+    // show stuff
     quizEl.show();
     feedbackEl.hide();
     scoreEl.show();
+    // set start values
     isFinished = false;
-    qCounter = 0;
     score = 0;
     correctEl.text(score);
+    qCounter = 0;
+    // first question
     iterateQuiz(qCounter);
 }
 
 function finishQuiz() {
-    startEl.show();
+    saveEl.show();
     timerEl.hide();
     quizEl.hide();
+};
+
+function saveScore() {
+    let submitEl = $('#submit');
+    submitEl.click(function(event) {
+        event.preventDefault();
+        let initialsEl = $('#initials');
+        // exit function if initials input is blank
+        if (initialsEl.val() === "") {
+            return;
+        }
+
+        let yourscore = {initials: $.trim(initialsEl.val()), s: score};
+        if (storedscores !== null) {
+            storedscores.push(yourscore);
+            localStorage.setItem("highscores", JSON.stringify(storedscores));
+        } else {
+            let highscores = [];
+            highscores.push(yourscore);
+            localStorage.setItem("highscores", JSON.stringify(highscores));
+            storedscores = JSON.parse(localStorage.getItem("highscores")); // need to update storedscores value here so showScores() works
+        }
+        showScores();
+    });
+};
+
+function showScores() {
+    if (storedscores !== null) {
+        
+        storedscores.sort(function(a,b){return a.score < b.score});
+      
+    for (var i = 0; i < storedscores.length; i++) {
+        let hsinit = storedscores[i].initials;
+        let hsscore = storedscores[i].s;
+
+        let table = document.createElement("table");
+        let row = document.createElement("tr");
+        let cell1 = document.createElement("td");
+        let cell2 = document.createElement("td");
+        cell1.textContent = hsinit;
+        cell2.textContent = hsscore;
+        row.appendChild(cell1);
+        row.appendChild(cell2);
+        table.appendChild(row);
+        highscoresEl.append(table);
+      }
+
+    highscoresEl.show();
+    }
 };
 
 function startTimer() {
@@ -140,5 +198,10 @@ startEl.click(function() {
     startQuiz();
 });
 
-// run global button listener
+showscoresEl.click(function() {
+    showScores();
+})
+
+// run global button listeners
 checkTrue();
+saveScore();

@@ -27,11 +27,18 @@
         <aside id="timer">time remaining <span id="time">90</span>
         </aside>
         <aside id="score">questions correct <span id="correct">0</span>
+            <div id="save-score">
+            <label for="initials">Enter your initials to save your score:</label>
+            <input id="initials" name="initials"><input id="submit" type="submit" value="Submit">
+            </div> 
         </aside>
         <aside id="feedback">
             <hr />
             <p id="message">Yo, fr?</p>
+            
         </aside>
+        <a href="#" id="showscores">Show High Scores</a>
+        <div id="highscores"></div>
     </main>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
