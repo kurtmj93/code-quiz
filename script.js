@@ -103,6 +103,7 @@ function showScores() {
     if (storedscores !== null) {
         
         storedscores.sort(function(a,b){return b.s - a.s});
+        highscoresEl.empty();
       
     for (var i = 0; i < storedscores.length; i++) {
         let hsinit = storedscores[i].initials;
