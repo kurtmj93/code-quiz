@@ -100,7 +100,6 @@ function saveScore() {
 };
 
 function showScores() {
-    finishQuiz();
     if (storedscores !== null) {
         
         storedscores.sort(function(a,b){return b.s - a.s}); // sorts stored scores array by top scores
