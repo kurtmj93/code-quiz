@@ -100,16 +100,17 @@ function saveScore() {
 };
 
 function showScores() {
+    finishQuiz();
     if (storedscores !== null) {
         
-        storedscores.sort(function(a,b){return b.s - a.s});
-        highscoresEl.empty();
+        storedscores.sort(function(a,b){return b.s - a.s}); // sorts stored scores array by top scores
+        highscoresEl.empty(); // empties div if it already has stuff created - fixes duplication issue
       
+    let table = document.createElement("table");
+        // loops through all stored scores and creates table entry
     for (var i = 0; i < storedscores.length; i++) {
         let hsinit = storedscores[i].initials;
         let hsscore = storedscores[i].s;
-
-        let table = document.createElement("table");
         let row = document.createElement("tr");
         let cell1 = document.createElement("td");
         let cell2 = document.createElement("td");
@@ -118,9 +119,8 @@ function showScores() {
         row.appendChild(cell1);
         row.appendChild(cell2);
         table.appendChild(row);
-        highscoresEl.append(table);
       }
-
+    highscoresEl.append(table);
     highscoresEl.show();
     }
 };
