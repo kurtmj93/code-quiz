@@ -22,7 +22,7 @@ let score = 0; // score counter
 let isFinished = false; // 
 let time = 0; // quiz time value is set later by startTimer
 
-// stored data
+// parse stored highscores
 let storedscores = JSON.parse(localStorage.getItem("highscores"));
 
 // array of question objects
@@ -84,11 +84,12 @@ function saveScore() {
             return;
         }
 
-        let yourscore = {initials: $.trim(initialsEl.val()), s: score};
+        let yourscore = {initials: $.trim(initialsEl.val()), s: score}; // lots of troubleshooting from mixing jquery and vanila...
         if (storedscores !== null) {
             storedscores.push(yourscore);
             localStorage.setItem("highscores", JSON.stringify(storedscores));
         } else {
+            // creating a blank array to push your score to - if there is no stored data
             let highscores = [];
             highscores.push(yourscore);
             localStorage.setItem("highscores", JSON.stringify(highscores));
@@ -101,7 +102,7 @@ function saveScore() {
 function showScores() {
     if (storedscores !== null) {
         
-        storedscores.sort(function(a,b){return a.score < b.score});
+        storedscores.sort(function(a,b){return b.s - a.s});
       
     for (var i = 0; i < storedscores.length; i++) {
         let hsinit = storedscores[i].initials;
