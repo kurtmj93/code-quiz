@@ -106,7 +106,7 @@ function showScores() {
         highscoresEl.empty(); // empties div if it already has stuff created - fixes duplication issue
       
     let table = document.createElement("table");
-        // loops through all stored scores and creates table entry
+        // loops through all stored scores to create rows - cells for initials and score
     for (var i = 0; i < storedscores.length; i++) {
         let hsinit = storedscores[i].initials;
         let hsscore = storedscores[i].s;
@@ -154,7 +154,7 @@ function updateQuestion(qCounter) {
     mc4El.val(questions[qCounter].answers[3].isAnswer);
 }
 
-// iterate on button click, for use in checkTrue
+// iterate on button click - used in checkTrue listener - means quiz advanced whether correct or incorrect
 function countClick() {
     feedbackEl.show();
     correctEl.text(score);
@@ -166,7 +166,7 @@ function countClick() {
 function checkTrue() {
     let buttonEl = $('button');
     buttonEl.click(function() {
-    // Unintentionally, this boolean value is being evaluated as a string. It works, but is it right
+    // Unintentionally, this boolean value is being evaluated as a string. It works, but... is it right??
         if (this.value == 'true' ) {
                 messageEl.text('Correct!');
                 score++;
@@ -182,7 +182,7 @@ function checkTrue() {
     });
 };
 
-// finish quiz or update counter
+// finish quiz or go to next question
 function iterateQuiz(qCounter) {
     if (qCounter === questions.length) {
         isFinished = true; // need to update this value to turn off timer
@@ -192,7 +192,9 @@ function iterateQuiz(qCounter) {
     }
 }
 
-// start quiz button
+
+// run global event listeners
+
 startEl.click(function() {
     startTimer();
     startEl.hide();
@@ -203,6 +205,5 @@ showscoresEl.click(function() {
     showScores();
 })
 
-// run global button listeners
 checkTrue();
 saveScore();
