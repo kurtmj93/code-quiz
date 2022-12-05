@@ -1,4 +1,4 @@
-// grab HTML elements using JQuery
+// grab HTML elements using JQuery - this might be a little inefficient if I'm only using these in one place
 let quizEl = $('#quiz');
 let questionEl = $('#question');
 let mc1El = $('#mc1');

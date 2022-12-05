@@ -13,6 +13,30 @@ body {
     padding: 40px;
 }
 
-#timer, #feedback, #quiz, #score, #save-score {
+/* Section IDs hidden by default - later shown by jquery */
+
+#timer, #feedback, #quiz, #score, #save-score, #highscores {
     display: none;
+}
+
+main {
+    padding: 10px;
+    width: 400px;
+}
+
+button {
+    background-color: navy;
+    border-color: white;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+}
+
+button:hover {
+    background-color: violet;
+}
+
+#timer {
+    align-items: right;
+    align-content: right;
 }
