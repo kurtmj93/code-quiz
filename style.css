@@ -24,19 +24,32 @@ main {
     width: 400px;
 }
 
-button {
+button, #start, input#submit {
     background-color: navy;
     border-color: white;
     border-radius: 5px;
     color: white;
     padding: 10px;
+    text-decoration: none;
 }
 
-button:hover {
+button:hover, #start:hover, input#submit:hover {
     background-color: violet;
 }
 
 #timer {
     align-items: right;
     align-content: right;
+}
+
+input#initials {
+    padding: 10px;
+}
+
+#highscores h2 {
+    margin-top: 20px;
+}
+
+td, tr {
+    padding: 10px;
 }

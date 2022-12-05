@@ -104,6 +104,11 @@ function showScores() {
         
         storedscores.sort(function(a,b){return b.s - a.s}); // sorts stored scores array by top scores
         highscoresEl.empty(); // empties div if it already has stuff created - fixes duplication issue
+    
+    showscoresEl.text('Hide High Scores');
+    let heading = document.createElement("h2");
+    heading.innerText = ('High Scores');
+    highscoresEl.append(heading);
       
     let table = document.createElement("table");
         // loops through all stored scores to create rows - cells for initials and score
@@ -202,7 +207,12 @@ startEl.click(function() {
 });
 
 showscoresEl.click(function() {
+    if (showscoresEl.text() === 'Hide High Scores') {
+        highscoresEl.empty(); // empties div if it already has stuff created
+        showscoresEl.text('Show High Scores');
+    } else {
     showScores();
+    }
 })
 
 checkTrue();
