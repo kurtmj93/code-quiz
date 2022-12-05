@@ -53,3 +53,7 @@ input#initials {
 td, tr {
     padding: 10px;
 }
+
+#feedback {
+    margin-top: 20px;
+}

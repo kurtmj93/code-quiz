@@ -2,11 +2,11 @@
 
 ## Deployed Link
 
-Coming soon.
+[Deployed Link](https://kurtmj93.github.io/code-quiz/)
 
 ## Screenshots
 
-Coming soon.
+![Timed Code Quiz Screenshot](./assets/timedcodequiz.png/ "Timed Code Quiz Screenshot")
 
 ## Description
 
